@@ -1,0 +1,36 @@
+# apply: kubectl apply -f k8s-rws.yaml
+# check: kubectl get all
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rdms-service
+spec:
+  selector:
+    app: rdms
+  ports:
+      # targetPort is Pod/container's port. port is where other pods (in same cluster) connect to.
+    - port: 5100
+      targetPort: 5100
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rdms
+  labels:
+    app: rdms
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rdms
+  template:
+    metadata:
+      labels:
+        app: rdms
+    spec:
+      containers:
+      - name: rdms
+        image: guillaume08/sn-project:1.0
+        ports:
+        - containerPort: 5100

@@ -1,0 +1,36 @@
+# apply: kubectl apply -f k8s-rws.yaml
+# check: kubectl get all
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rqs-service
+spec:
+  selector:
+    app: rqs
+  ports:
+      # targetPort is Pod/container's port. port is where other pods (in same cluster) connect to.
+    - port: 4000
+      targetPort: 4000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rqs
+  labels:
+    app: rqs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rqs
+  template:
+    metadata:
+      labels:
+        app: rqs
+    spec:
+      containers:
+      - name: rqs
+        image: bastienbng/rustqrcodeservice:1.8
+        ports:
+        - containerPort: 4000

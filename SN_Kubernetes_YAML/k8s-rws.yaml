@@ -1,0 +1,39 @@
+# apply: kubectl apply -f k8s-rws.yaml
+# check: kubectl get all
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rws-service
+spec:
+  selector:
+    app: rws
+  ports:
+      # targetPort is Pod/container's port. port is where other pods (in same cluster) connect to.
+    - port: 8000
+      targetPort: 8000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rws
+  labels:
+    app: rws
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rws
+  template:
+    metadata:
+      labels:
+        app: rws
+    spec:
+      containers:
+      - name: rws
+        image: bastienbng/rustwebservice:7.8
+        env:
+        - name: SALT
+          value: "salt_smart_notary_website"
+        ports:
+        - containerPort: 8000

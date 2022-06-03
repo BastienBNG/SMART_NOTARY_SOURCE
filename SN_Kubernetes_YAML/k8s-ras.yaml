@@ -1,0 +1,38 @@
+# apply: kubectl apply -f k8s-rws.yaml
+# check: kubectl get all
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ras-service
+spec:
+  selector:
+    app: ras
+  ports:
+    - port: 3000
+      targetPort: 3000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ras
+  labels:
+    app: ras
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ras
+  template:
+    metadata:
+      labels:
+        app: ras
+    spec:
+      containers:
+      - name: ras
+        image: bastienbng/rustauthservice:1.9
+        ports:
+        - containerPort: 3000
+
+---
+
