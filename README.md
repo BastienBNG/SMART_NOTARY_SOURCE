@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="images/logo.jpg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">SMART NOTARY</h3>
@@ -30,13 +30,13 @@
     <li>
       <a href="#alone-pods-tests">Alone pods tests</a>
       <ul>
-        <li><a href="#uuthentication-pod">Authentication pod</a></li>
+        <li><a href="#authentication-pod">Authentication pod</a></li>
         <li><a href="#web-interface-pod">Web Interface pod</a></li>
         <li><a href="#2d-doc-pod">2D-Doc pod</a></li>
         <li><a href="#doc-management-pod">Doc Management pod</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Deployment</a></li>
+    <li><a href="#deployment">Deployment</a></li>
   </ol>
 </details>
 
@@ -55,13 +55,13 @@ Smart notary is a project that allows you to authenticate and prove the authenti
 
 
 
-
+<br><br>
 
 <!-- GETTING STARTED -->
 ## Alone pods tests
 
 To try each pods separately
-
+<br><br>
 ### Authentication pod
 
 
@@ -71,19 +71,19 @@ To try each pods separately
 SMART NOTARY AUTHENTICATION APP :
 
 To run and test this project alone : 
-
+<br><br>
 #### SSL libs + Clang/LLVM
 sudo apt install openssl libssl-dev clang llvm-dev libclang-dev
-
+<br><br>
 #### SQLX CLI
 cargo install --git https://github.com/launchbadge/sqlx sqlx-cli
-
+<br><br>
 #### Run docker-compose (postgres database)
 docker-compose up -d
 
 #### Run migrations
 sqlx mig run
-
+<br><br>
 #### Run the server (http://localhost:3000)
 cargo run
 
@@ -91,7 +91,7 @@ You need to change the IP address of the postgres Database in .env file.
 
 
 ALL THE COMMAND TO TEST WITH A JSON :
-
+<br><br>
 #### Register :
 
 curl --request POST \
@@ -102,13 +102,13 @@ curl --request POST \
       "email": "user1@example.com",
       "password": "user1"
   }'
-
+<br><br>
 #### Login :
 
 curl --request POST \
   --url 0.0.0.0:3000/auth \
   --user user1
-
+<br><br>
 #### Get Informations :
 
 curl --request GET \
@@ -123,7 +123,7 @@ kubectl apply -f k8s-ras.yaml --> Deploy Authentication Pod
 kubectl apply -f postgres.yaml --> Deploy posgres database Pod
 
 
-
+<br><br>
 
 ### Web Interface pod
 
@@ -142,7 +142,7 @@ You can go on Certifier un nouveau Document and add all the informations to Gene
 YOU CAN'T REGISTER AND LOGIN WHEN ONLY THIS POD IS RUNNING !
 
 
-
+<br><br>
 ### 2D-Doc pod
 
 
@@ -157,7 +157,7 @@ curl -v -H "Content-Type: application/json"  -X POST -d '{"last_name": "GAUDE","
 2D-Doc is generated
 
 
-
+<br><br>
 ### Doc Management pod
 
 
@@ -179,25 +179,25 @@ curl --request POST \
   => push content doc on minio at the port 9000
 
 Work only if the MinIO pod is deploy
-
+<br><br>
 ## Deployment
 
 
 kubectl apply -f k8s-rdms.yaml --> Deploy document Management Pod
-<br />
+<br>
 
 kubectl apply -f k8s-rqs.yaml --> Deploy 2DDOC Generator Pod
-<br />
+<br>
 kubectl apply -f k8s-rws.yaml --> Deploy Web interface Pod
-<br />
+<br>
 kubectl apply -f k8s-ras.yaml --> Deploy Authentication Pod
-<br />
+<br>
 kubectl apply -f minio.yaml --> Deploy MinIO Pod
-<br />
+<br>
 kubectl apply -f ingress.yaml --> Deploy Ingress
-<br />
+<br>
 kubectl apply -f secret.yaml --> Deploy the Secret
-<br />
+<br>
 kubectl apply -f postgres.yaml --> Deploy the Database pod postgresql
 
 
