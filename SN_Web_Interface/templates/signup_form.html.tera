@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="static/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="static/css/style_register_form.css">
+</head>
+
+<body>
+
+    <div class="main">
+       
+        <!-- Sign up form -->
+        <div class="signin-form">
+                        <h2 class="form-title">Sign up</h2>
+
+
+                        <form>
+                            <div>
+                                <input type="text" name="name" id="name" placeholder="Your Name" />
+                            </div>
+
+
+                            <div>
+                                <input type="email" name="email" id="email" placeholder="Your Email" />
+                            </div>
+
+
+
+                            <div>
+                                <input type="password" name="pass" id="pass" placeholder="Password" />
+                            </div>
+
+
+                            <div>
+                                <input type="password" name="re_pass" id="re_pass" placeholder="Repeat your password" />
+                            </div>
+
+                            
+                            <div>
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" />
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all
+                                    statements in <a href="#" class="term-service">Terms of service</a>
+                                
+                                </label>
+
+                            </div>
+
+                            <div>
+                                <input type="button" name="signup" id="signup" value="Register" />
+                            </div>
+                            <div>
+                                <input id="messagesignup" disabled="disabled"/>
+                            </div>
+                            
+
+
+                        </form>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="signup-image">
+                        <figure><img src="static/assets/img/signup-image.jpg" alt="sing up image"></figure>
+                        <a href="signin_form" >I am already member</a>
+                    </div>
+    
+    </div>
+
+   <script>
+
+        function rediriger_signin() {
+                nameredirect = document.getElementById("name").value;
+                alert("Votre compte à bien était créer " + nameredirect + "                   Veuillez cliquez sur (I am already member) pour continuer");
+               
+            }
+
+
+        document.getElementById("signup").addEventListener("click", event => {
+            enrollment();
+            
+        });
+
+        function enrollment() {
+            let inputName = document.getElementById("name").value;
+            let inputEmail = document.getElementById("email").value;
+            let inputPassword = document.getElementById("pass");
+
+            
+
+            var passwordtohash = inputPassword;
+
+            var pass1 = document.getElementById("pass").value;
+            var re_pass1 = document.getElementById("re_pass").value;
+
+      
+
+            var hashObj = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
+            hashObj.update("smart_notary" + passwordtohash.value);
+            var hash = hashObj.getHash("HEX");
+            passwordtohash.value = hash;
+            console.log(passwordtohash.value);
+
+            //console.log(inputName + "," + inputEmail + ", " + inputPassword);
+            if(pass1 == re_pass1)
+            {    
+                    
+                    
+
+            let xhr = new XMLHttpRequest();
+            
+            
+            xhr.open("POST", "/backend/signup", true);
+            // Set the request header i.e. which type of content you are sending
+            xhr.setRequestHeader("Content-Type", "application/json");
+   
+            // Create a state change callback
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+   
+                    // Print received data from server
+                    var response = xhr.repsonseText;
+                    console.log("Ok")
+                    var mess = JSON.parse(xhr.responseText);
+                    document.getElementById('messagesignup').value=mess.message;
+                    
+                }
+            };
+            // Converting JSON data to string
+            var data = JSON.stringify({"username":inputName, "email":inputEmail, "password": passwordtohash.value});
+            // Sending data with the request
+            xhr.send(data);
+            
+            
+            }
+            else 
+            {
+                document.getElementById('messagesignup').value="Mot de passe différent";
+            }}
+
+            
+
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+    
+</body>
+</html>

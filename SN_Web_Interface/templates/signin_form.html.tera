@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="static/fonts/material-icon/css/material-design-iconic-font.min.css">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="static/css/style_register_form.css">
+</head>
+
+<body>
+
+    <div class="main">
+       
+        <!-- Sign up form -->
+       
+                        
+
+                        <div class="signin-form">
+
+                            <h2 class="form-title">Sign In</h2>
+                        <form>
+                            
+
+                            <div class="form-group">
+                                <input type="text" name="name" id="name" placeholder="Your Name" />
+                            </div>
+
+
+
+                            <div>
+                                <input type="password" name="pass" id="pass" placeholder="Password" />
+                            </div>
+
+                            <div>
+                                <input type="button" name="signin" id="signin" value="Login" />
+                            </div>
+
+
+                        </form>
+
+                        </div>
+
+
+
+                    </div>
+
+                    <div class="signup-image">
+                        <figure><img src="static/assets/img/signup-image.jpg" alt="sing up image"></figure>
+                        
+                    </div>
+    
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+   <script>
+
+        
+
+        document.getElementById("signin").addEventListener("click", event => {
+            login()
+            //setTimeout(rediriger_acceuil,1000)
+            
+        });
+
+        function login() {
+            
+            let inputName = document.getElementById("name").value;
+            let inputPassword = document.getElementById("pass");
+
+            //console.log(inputName + "," + inputEmail + ", " + inputPassword);
+
+
+            var hashObj1 = new jsSHA("SHA-512", "TEXT", {numRounds: 1});
+            hashObj1.update("smart_notary" + inputPassword.value);
+            var hash = hashObj1.getHash("HEX");
+            inputPassword.value = hash;
+            console.log(inputPassword.value);
+
+
+            let xhr = new XMLHttpRequest();
+
+
+            xhr.onreadystatechange = function() {
+                 if(xhr.readyState === 4 && xhr.status === 200)  {
+                console.log(xhr.responseText);
+                var jsontoken = JSON.stringify(xhr.responseText);
+                console.log(jsontoken);
+                sessionStorage.setItem("token",jsontoken);
+                setTimeout(rediriger_acceuil,500)
+                
+                }
+            }
+            xhr.open("POST", "/backend/auth", true);
+            
+            xhr.setRequestHeader("Authorization", "Basic" + " " + btoa(inputName +":" + inputPassword.value))
+            // Create a state change callback
+        
+            xhr.send();
+    
+            
+            }
+
+
+            function rediriger_acceuil() {
+                window.location.replace("/website/acceuil");
+            }
+
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsSHA/2.0.2/sha.js"></script>
+
+<script src="static/js/main.js"></script>
+    
+</body>
+</html>

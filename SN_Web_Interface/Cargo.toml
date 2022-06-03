@@ -1,0 +1,30 @@
+[package]
+name = "rustwebservice"
+version = "0.3.0"
+authors = ["bastien-b"]
+edition = "2018"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+rocket = "0.4.10"
+wasm-bindgen = "0.2.67"
+getrandom = { version = "0.2", features = ["js"] }
+
+
+[dependencies.rocket_contrib]
+version = "0.4.10"
+default-features = false
+features = ["tera_templates","serve"]
+
+
+[package.metadata.wasm-pack.profile.release]
+wasm-opt = ["-Oz", "--enable-mutable-globals"]
+
+
+
+
+
+
+
