@@ -7,7 +7,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.jpg" alt="Logo" width="80" height="80">
+    <img src="images/logo.jpg" alt="Logo" width="800" height="200">
   </a>
 
   <h3 align="center">SMART NOTARY</h3>
@@ -117,11 +117,6 @@ curl --request GET \
 
 
 
-TO DEPLOY :
-
-kubectl apply -f k8s-ras.yaml --> Deploy Authentication Pod
-kubectl apply -f postgres.yaml --> Deploy posgres database Pod
-
 
 <br><br>
 
@@ -184,20 +179,26 @@ Work only if the MinIO pod is deploy
 
 
 kubectl apply -f k8s-rdms.yaml --> Deploy document Management Pod
-<br>
+<br><br />
 
 kubectl apply -f k8s-rqs.yaml --> Deploy 2DDOC Generator Pod
-<br>
+<br><br />
+
 kubectl apply -f k8s-rws.yaml --> Deploy Web interface Pod
-<br>
+<br><br />
+
 kubectl apply -f k8s-ras.yaml --> Deploy Authentication Pod
-<br>
+<br><br />
+
 kubectl apply -f minio.yaml --> Deploy MinIO Pod
-<br>
+<br><br />
+
 kubectl apply -f ingress.yaml --> Deploy Ingress
-<br>
+<br><br />
+
 kubectl apply -f secret.yaml --> Deploy the Secret
-<br>
+<br><br />
+
 kubectl apply -f postgres.yaml --> Deploy the Database pod postgresql
 
 
